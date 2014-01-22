@@ -5,7 +5,7 @@ Tests the logic of the "answer-pool" attribute, e.g.
 
 import unittest
 import textwrap
-from . import test_system, new_loncapa_problem
+from . import test_capa_system, new_loncapa_problem
 from capa.responsetypes import LoncapaProblemError
 
 
@@ -17,7 +17,7 @@ class CapaAnswerPoolTest(unittest.TestCase):
 
     def setUp(self):
         super(CapaAnswerPoolTest, self).setUp()
-        self.system = test_system()
+        self.system = test_capa_system()
 
     def test_answer_pool_4_choices_1_multiplechoiceresponse_seed1(self):
         xml_str = textwrap.dedent("""

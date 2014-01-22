@@ -5,7 +5,7 @@ i.e. those with the <multiplechoiceresponse> element
 
 import unittest
 import textwrap
-from . import test_system, new_loncapa_problem
+from . import test_capa_system, new_loncapa_problem
 
 
 class CapaTargetedFeedbackTest(unittest.TestCase):
@@ -15,7 +15,7 @@ class CapaTargetedFeedbackTest(unittest.TestCase):
 
     def setUp(self):
         super(CapaTargetedFeedbackTest, self).setUp()
-        self.system = test_system()
+        self.system = test_capa_system()
 
     def test_no_targeted_feedback(self):
         xml_str = textwrap.dedent("""

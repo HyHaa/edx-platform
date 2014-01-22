@@ -21,6 +21,7 @@ import re
 from lxml import etree
 from xml.sax.saxutils import unescape
 from copy import deepcopy
+from random import Random
 
 from capa.correctmap import CorrectMap
 import capa.inputtypes as inputtypes
