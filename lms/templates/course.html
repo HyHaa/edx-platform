@@ -3,6 +3,7 @@
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from courseware.courses import course_image_url, get_course_about_section
+from django.conf import settings
 %>
 <%page args="course" />
 <article id="${course.id}" class="course">
@@ -26,7 +27,9 @@ from courseware.courses import course_image_url, get_course_about_section
         </div>
         <div class="bottom">
           <span class="university">${get_course_about_section(course, 'university')}</span>
+          % if course.start < settings.FEATURES['DATETIME_DENOTING_NO_COURSE_STARTDATE']:
           <span class="start-date">${course.start_date_text}</span>
+          % endif
         </div>
       </section>
     </div>
