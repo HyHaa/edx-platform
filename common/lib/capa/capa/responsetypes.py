@@ -206,12 +206,10 @@ class LoncapaResponse(object):
     # Masking and Shuffling:
     # "Masking" is a feature where the regular names of multiplechoice choices
     # choice_0 choice_1 ... are not used. Instead we use random masked names
-    # choice_22 choice_20 ... so that a view-source of the names reveals nothing about
+    # mask_2 mask_0 ... so that a view-source of the names reveals nothing about
     # the original order. The masked names are the names used throughout the code.
     # We "unmask" the names, back to choice_0 style, only for the logs so they correspond
     # to how the problems look to the author.
-    # The masked names use 2 digits as an informal reminder to anyone debugging that the
-    # masked names are different from the regular names.
     #
     # "Shuffling" is a feature that randomly shuffled the presentation order of the
     # choices, so for example an instructor can always write the correct choice
@@ -268,7 +266,7 @@ class LoncapaResponse(object):
 
     def unmask_name(self, name):
         """
-        Given a masked name, e.g. choice_23, returns the regular name, e.g. choice_0.
+        Given a masked name, e.g. mask_2, returns the regular name, e.g. choice_0.
         Fails loudly if called for a response that is not masking.
         """
         # We could check that masking is enabled, but I figure it's better to
@@ -825,16 +823,16 @@ class MultipleChoiceResponse(LoncapaResponse):
         """
         i = 0
         for response in self.xml.xpath("choicegroup"):
-            # Masking - detect if masking is appropriate.
-            # TODO: masking enabled by shuffle and answer-pool, could have 'inhibit' option for debugging
-            if response.get("shuffle") == "true":
+            # Detect if masking is appropriate - currently the shuffle and answer-pool features
+            if response.get("shuffle") == "true" or response.get("answer-pool"):
                 self.is_masked = True
+                # Way downstream at grading/logging time, we notice .is_masked and so know to unmask
                 self.mask_dict = {}
-                rng = random.Random(self.context['seed'])
+                rng = random.Random(self.context["seed"])
                 # e.g. mask_ids = [3, 1, 0, 2]
                 mask_ids = range(len(response))
                 rng.shuffle(mask_ids)
-            rtype = response.get('type')
+            rtype = response.get("type")
             if rtype not in ["MultipleChoice"]:
                 # force choicegroup to be MultipleChoice if not valid
                 response.set("type", "MultipleChoice")
@@ -845,12 +843,12 @@ class MultipleChoiceResponse(LoncapaResponse):
                 else:
                     name = "choice_" + str(i)
                     i += 1
-                # If using the masked name, choice_21, save the regular name
+                # If masking is happening, save the regular name aside
                 # to support unmasking later (for the logs).
                 if hasattr(self, "is_masked"):
-                    # Make masked names look different, e.g. choice_20
-                    # This is purely cosmetic, just to help debugging
-                    mask_name = "choice_" + str(mask_ids.pop() + 20)
+                    # Mask names are mask_2 mask_0 ... so in the view-source case you can
+                    # see that masking is on.
+                    mask_name = "mask_" + str(mask_ids.pop())
                     self.mask_dict[mask_name] = name
                     choice.set("name", mask_name)
                 else:

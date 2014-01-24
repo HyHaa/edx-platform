@@ -192,29 +192,7 @@ Studio: Change course overview page, checklists, assets, import, export, and cou
 management page URLs to a RESTful interface. Also removed "\listing", which
 duplicated "\index".
 
-Studio: Support answer pools for multiple choice question choices, so authors can provide
-multiple incorrect and correct choices for a question and have 1 correct choice and n-1
-incorrect choices randomly selected and shuffled before being presented to the student.
-In XML: <choicegroup answer-pool="4"> enables an answer pool of 4 choices: 3
-correct choices and 1 incorrect choice. To provide multiple solution expanations, wrap
-all solution elements within a <solutionset>, and make sure to add an attribute called
-"explanation-id" to both the <solution> tag and its corresponding <choice> tag, and be
-sure that the value for this "explanation-id" attribute is the same for both. Note that
-this feature is only supported in the advanced XML problem editor, not the regular one.
-Also note that if you want your question to have a different set of answers for different
-attempts, be sure in the problem settings in Studio to set "Randomization" to "Always"
-
 LMS: Fixed accessibility bug where users could not tab through wiki (LMS-1307)
-
-Studio: support shuffling of multiple choice question choices, so authors can
-write choices without worrying about their order.
-In XML: <choicegroup type="MultipleChoice" shuffle="true"> enables shuffling
-and <choice fixed="true"> holds a particular choice back from the shuffle, e.g.
-an "All of the above" choice that should remain at the end position.
-Fixed choices should be grouped at the head or tail end of the list
-of choices. Any other fixed choices are moved to the tail end.
-In the markdown: an exclamation (!) in any of the parenthesis enables shuffling
-of all the choices, and (@) sets that choice to be fixed.
 
 Blades: When start time and end time are specified for a video, a visual range
 will be shown on the time slider to highlight the place in the video that will

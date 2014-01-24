@@ -486,9 +486,9 @@ class CapaModule(CapaMixin, XModule):
             if hasattr(response, 'is_masked') and response.answer_id in answers:
                 # 1. Change the answer to use the regular choice_0 naming
                 answers[response.answer_id] = response.unmask_name(answers[response.answer_id])
-                print "eek", name, unmasked
                 # 2. Record the shuffled ordering
                 event_info['display_order'] = {response.answer_id: response.unmask_order()}
+                print "eek event_info un-masked:", name, unmasked
         #import ipdb
         #ipdb.set_trace()
 

@@ -523,19 +523,11 @@ class LoncapaProblem(object):
 
     def do_targeted_feedback(self, tree):
         """
-Allows for problem questions to show targeted feedback, which are choice-level explanations.
-Targeted feedback is automatically visible after a student has submitted their answers.
-
-The <multiplechoiceresponse> tag must have an attribute 'targeted-feedback':
-- if so, this method will modify the tree
-- if not, this method will not modify the tree
-- if the value is 'alwaysShowCorrectChoiceExplanation', then the correct-choice
-explanation will be automatically visible too after a student has submitted answers
-
-Note if the value is 'alwaysShowCorrectChoiceExplanation', you probably want to set
-the "Show Answer" setting to "Never" because now there's no need for a "Show Answer"
-button because no solution will show up if you were to click the "Show Answer" button
-"""
+        Implements targeted feedback by in-place editing the given tree.
+        This only does something if the <multiplechoiceresponse> tag has
+        a 'targeted-feedback' attribute.
+        Calling this a second time does nothing.
+        """
 
         # If called a second time, don't do anything, since it's in-place destructive
         if hasattr(self, 'targeted_done'):
