@@ -6,6 +6,7 @@
             oldOTBD = window.onTouchBasedDevice;
             window.onTouchBasedDevice = jasmine.createSpy('onTouchBasedDevice')
                 .andReturn(null);
+        });
 
         afterEach(function () {
             $('source').remove();
