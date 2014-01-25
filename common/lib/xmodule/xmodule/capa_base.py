@@ -838,7 +838,7 @@ class CapaMixin(CapaFields):
         Publishes the student's current grade to the system as an event
         """
         score = self.lcp.get_score()
-        self.runtime.publish({
+        self.runtime.publish(self, {
             'event_name': 'grade',
             'value': score['score'],
             'max_value': score['total'],
