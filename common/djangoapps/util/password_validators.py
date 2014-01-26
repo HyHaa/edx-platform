@@ -176,12 +176,13 @@ class CommonSequenceValidator(BaseSimilarityValidator):
     message = _("Based on a common sequence of characters")
     code = "common_sequence"
 
-password_validate_length = LengthValidator(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)
-password_validate_complexity = ComplexityValidator(PASSWORD_COMPLEXITY)
-password_validate_dictionary_words = DictionaryValidator(dictionary=PASSWORD_DICTIONARY)
-password_validate_common_sequences = CommonSequenceValidator(PASSWORD_COMMON_SEQUENCES)
+password_validate_length = LengthValidator(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH) #pylint: disable=C0103
+password_validate_complexity = ComplexityValidator(PASSWORD_COMPLEXITY) #pylint: disable=C0103
+password_validate_dictionary_words = DictionaryValidator(dictionary=PASSWORD_DICTIONARY) #pylint: disable=C0103
+password_validate_common_sequences = CommonSequenceValidator(PASSWORD_COMMON_SEQUENCES) #pylint: disable=C0103
 
-class override_length_settings(object):
+
+class override_length_settings(object): #pylint: disable=C0103
     """
     Allows for overrides during password complexity testing
     """
@@ -228,7 +229,7 @@ class override_length_settings(object):
         return test_wrapping
 
 
-class override_complexity_settings(object):
+class override_complexity_settings(object): #pylint: disable=C0103
     """
     Allows for overrides during password complexity testing
     """
@@ -287,7 +288,7 @@ class override_complexity_settings(object):
         return test_wrapping
 
 
-class override_dictionary_settings(object):
+class override_dictionary_settings(object): #pylint: disable=C0103
     """
     Allows for overrides during password complexity testing
     """
