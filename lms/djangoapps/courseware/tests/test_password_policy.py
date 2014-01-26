@@ -119,7 +119,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['value'], "Invalid Length (Must be 12 characters or less)")
 
-    @override_complexity_settings({'UPPER' : 3})
+    @override_complexity_settings({'UPPER': 3})
     def test_enough_upper_case_letters(self):
         """
         Assert the rules regarding minimum upper case letters in a password
@@ -139,7 +139,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
         )
         self.assertEqual(data['success'], True)
 
-    @override_complexity_settings({'LOWER' : 3})
+    @override_complexity_settings({'LOWER': 3})
     def test_enough_lower_case_letters(self):
         """
         Assert the rules regarding minimum lower case letters in a password
@@ -159,7 +159,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
         )
         self.assertEqual(data['success'], True)
 
-    @override_complexity_settings({'DIGITS' : 3})
+    @override_complexity_settings({'DIGITS': 3})
     def test_enough_digits(self):
         """
         Assert the rules regarding minimum lower case letters in a password
@@ -179,7 +179,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
         )
         self.assertEqual(data['success'], True)
 
-    @override_complexity_settings({'PUNCTUATION' : 3})
+    @override_complexity_settings({'PUNCTUATION': 3})
     def test_enough_punctuations(self):
         """
         Assert the rules regarding minimum punctuation count in a password
@@ -200,7 +200,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
         print 'result = {0}'.format(data)
         self.assertEqual(data['success'], True)
 
-    @override_complexity_settings({'WORDS' : 3})
+    @override_complexity_settings({'WORDS': 3})
     def test_enough_words(self):
         """
         Assert the rules regarding minimum word count in password
@@ -246,5 +246,16 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
             self._get_unique_username(),
             self._get_unique_email(),
             u'this_is_ok'
+        )
+        self.assertEqual(data['success'], True)
+
+    def test_with_unicode(self):
+        """
+        Make sure the library we are using is OK with unicode characters
+        """
+        data = self._do_register_attempt(
+            self._get_unique_username(),
+            self._get_unique_email(),
+            u'四節比分和七年前'
         )
         self.assertEqual(data['success'], True)

@@ -32,8 +32,9 @@ PASSWORD_MIN_LENGTH = getattr(settings, "PASSWORD_MIN_LENGTH", 6)
 PASSWORD_MAX_LENGTH = getattr(settings, "PASSWORD_MAX_LENGTH", None)
 PASSWORD_DICTIONARY = getattr(settings, "PASSWORD_DICTIONARY", None)
 PASSWORD_MATCH_THRESHOLD = getattr(settings, "PASSWORD_MATCH_THRESHOLD", 0.9)
-PASSWORD_COMMON_SEQUENCES =  getattr(settings, "PASSWORD_COMMON_SEQUENCES", COMMON_SEQUENCES)
+PASSWORD_COMMON_SEQUENCES = getattr(settings, "PASSWORD_COMMON_SEQUENCES", COMMON_SEQUENCES)
 PASSWORD_COMPLEXITY = getattr(settings, "PASSWORD_COMPLEXITY", None)
+
 
 class LengthValidator(object):
     """
@@ -55,6 +56,7 @@ class LengthValidator(object):
             raise ValidationError(
                 self.message % _("Must be %s characters or less") % self.max_length,
                 code=self.code)
+
 
 class ComplexityValidator(object):
     """
@@ -120,20 +122,20 @@ class BaseSimilarityValidator(object):
 
     def fuzzy_substring(self, needle, haystack):
         needle, haystack = needle.lower(), haystack.lower()
-        m, n = len(needle), len(haystack)
+        len_m, len_n = len(needle), len(haystack)
 
-        if m == 1:
+        if len_m == 1:
             if not needle in haystack:
                 return -1
-        if not n:
-            return m
+        if not len_n:
+            return len_m
 
-        row1 = [0] * (n+1)
-        for i in xrange(0,m):
-            row2 = [i+1]
-            for j in xrange(0,n):
-                cost = ( needle[i] != haystack[j] )
-                row2.append(min(row1[j+1]+1, row2[j]+1, row1[j]+cost))
+        row1 = [0] * (len_n + 1)
+        for i in xrange(0, len_m):
+            row2 = [i + 1]
+            for j in xrange(0, len_n):
+                cost = (needle[i] != haystack[j])
+                row2.append(min(row1[j + 1] + 1, row2[j] + 1, row1[j] + cost))
             row1 = row2
         return min(row1)
 
@@ -146,6 +148,7 @@ class BaseSimilarityValidator(object):
                 raise ValidationError(
                     self.message % {"haystacks": ", ".join(self.haystacks)},
                     code=self.code)
+
 
 class DictionaryValidator(BaseSimilarityValidator):
     """
