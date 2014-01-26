@@ -23,7 +23,7 @@ class TestPasswordPolicy(LoginEnrollmentTestCase):
 
     def _do_register_attempt(self, username, email, password):
         """
-        Assert that a too short password will fail
+        Helper method to make the call to the do registration
         """
         resp = check_for_post_code(self, 200, reverse('create_account'), {
             'username': username,
